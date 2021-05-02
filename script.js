@@ -72,3 +72,20 @@ form.addEventListener("submit", (e) => {
     search.value = "";
   }
 });
+search.oninput = handleType;
+function handleType(e) {
+  const searchTerm = search.value;
+
+  if (searchTerm) {
+    getMovies(SEARCHAPI + searchTerm);
+  }
+}
+document.getElementById("search").addEventListener("keydown", function (e) {
+  if (e.keyCode == 8) {
+    const searchTerm = search.value;
+
+    if (searchTerm) {
+      getMovies(SEARCHAPI + searchTerm);
+    }
+  }
+});
