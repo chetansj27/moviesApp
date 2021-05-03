@@ -1,5 +1,5 @@
 const APIURL =
-  "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1";
+  "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=";
 const IMGPATH = "https://image.tmdb.org/t/p/w1280";
 const SEARCHAPI =
   "https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=";
@@ -7,15 +7,22 @@ const SEARCHAPI =
 const main = document.getElementById("main");
 const form = document.getElementById("form");
 const search = document.getElementById("search");
-
+const next = document.getElementById("next");
+const prev = document.getElementById("previous");
+let page = 1;
 // initially get fav movies
-getMovies(APIURL);
+getMovies(APIURL + page);
 
 async function getMovies(url) {
+  if (page === 1) {
+    prev.style.visibility = "hidden";
+  } else {
+    prev.style.visibility = "visible";
+  }
   const resp = await fetch(url);
   const respData = await resp.json();
 
-  console.log(respData);
+  //console.log(respData);
 
   showMovies(respData.results);
 }
@@ -45,6 +52,7 @@ function showMovies(movies) {
                 <h3>Overview:</h3>
                 ${overview}
             </div>
+            
         `;
 
     main.appendChild(movieEl);
@@ -74,18 +82,23 @@ form.addEventListener("submit", (e) => {
 });
 search.oninput = handleType;
 function handleType(e) {
+  console.log("clicl");
   const searchTerm = search.value;
-
+  if (searchTerm == "") {
+    getMovies(APIURL);
+  }
   if (searchTerm) {
     getMovies(SEARCHAPI + searchTerm);
   }
 }
-document.getElementById("search").addEventListener("keydown", function (e) {
-  if (e.keyCode == 8) {
-    const searchTerm = search.value;
-
-    if (searchTerm) {
-      getMovies(SEARCHAPI + searchTerm);
-    }
-  }
-});
+next.addEventListener("click", nextPage);
+function nextPage() {
+  page += 1;
+  console.log(page);
+  getMovies(APIURL + page);
+}
+prev.addEventListener("click", prevPage);
+function prevPage() {
+  page -= 1;
+  getMovies(APIURL + page);
+}
