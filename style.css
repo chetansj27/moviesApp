@@ -48,7 +48,7 @@ main {
   overflow: hidden;
   position: relative;
   margin: 1rem;
-  width: 300px;
+  width: 22.5%;
 }
 
 .movie img {
@@ -120,4 +120,19 @@ main {
   color: white;
   border: none;
   font-size: large;
+}
+@media only screen and (max-width: 600px) {
+  .movie {
+    width: 98%;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .movie {
+    width: 45%;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .movie {
+    width: 22.5%;
+  }
 }
