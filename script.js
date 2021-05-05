@@ -12,8 +12,9 @@ const prev = document.getElementById("previous");
 let page = 1;
 // initially get fav movies
 getMovies(APIURL + page);
-
+next.style.visibility = "hidden";
 async function getMovies(url) {
+  next.style.visibility = "visible";
   if (page === 1) {
     prev.style.visibility = "hidden";
   } else {
